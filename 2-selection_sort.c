@@ -10,6 +10,8 @@ void selection_sort(int *array, size_t size)
 	size_t i, j, index_to_swap;
 	int swaper;
 
+	if (!array || size == 0)
+		return;
 	for (i = 0; i < size - 1; i++)
 	{
 		index_to_swap = i;
