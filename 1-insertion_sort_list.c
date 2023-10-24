@@ -1,48 +1,37 @@
+
 #include "sort.h"
 /**
- * insertion_sort_list - sort a lincked list using inserton algorithm
- * @list: pointer to the licked list struct
- * Return: void
-*/
+ * insertion_sort_list - Sort a dlinked list using bubble sort
+ * @list: head of the list
+ */
+
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *follow = (*list), *curr, *prec = (*list);
+	listint_t *runner, *keeper;
 
-	for (curr = (*list); curr->next; curr = curr->next)
+	if (!list || !*list || !(*list)->next)
+		return;
+
+	keeper = (*list)->next;
+	runner = keeper;
+
+	while (runner)
 	{
-		follow = curr->next;
-		if (curr->n > follow->n)
+		runner = runner->next;
+		while (keeper->prev && keeper->n < keeper->prev->n)
 		{
-			if (curr->prev)
-				curr->prev->next = follow;
-			if (follow->next)
-				follow->next->prev = curr;
-			curr->next = follow->next;
-			follow->next = curr;
-			follow->prev = curr->prev;
-			curr->prev = follow;
+			keeper->prev->next = keeper->next;
+			if (keeper->next)
+				keeper->next->prev = keeper->prev;
+			keeper->next = keeper->prev;
+			keeper->prev = keeper->next->prev;
+			keeper->next->prev = keeper;
+			if (keeper->prev)
+				keeper->prev->next = keeper;
+			else
+				*list = keeper;
 			print_list(*list);
-			while (follow->prev)
-			{
-				prec = follow->prev;
-				if (follow->n < prec->n)
-				{
-					if (follow->next)
-						follow->next->prev = prec;
-					if (prec->prev)
-						prec->prev->next = follow;
-					prec->next = follow->next;
-					follow->next = prec;
-					follow->prev = prec->prev;
-					prec->prev = follow;
-					if (prec == (*list))
-						(*list) = follow;
-					print_list(*list);
-				}
-				follow = prec;
-			}
-			curr = follow;
 		}
+		keeper = runner;
 	}
-
 }

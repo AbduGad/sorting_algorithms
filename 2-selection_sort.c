@@ -1,34 +1,34 @@
 #include "sort.h"
 /**
- * selection_sort- sort an array by selection algorithm
- * @array: array of integers to sort
- * @size: soze of the array to sort
- * Return:  void.
+ * selection_sort - Sort an array with selection method
+ * @array: array to sort
+ * @size: limit of data
  */
+
 void selection_sort(int *array, size_t size)
 {
-	size_t i, j, index_to_swap;
-	int swaper;
+	size_t index = 0;
+	size_t index2;
+	size_t min;
+	int temp;
 
-	if (!array || size == 0)
-		return;
-	for (i = 0; i < size - 1; i++)
+	while (index < size)
 	{
-		index_to_swap = i;
-		for (j = i + 1; j < size; j++)
+		min = index;
+		index2 = index;
+		while (index2 < size)
 		{
-			if (array[j] < array[i])
-			{
-				index_to_swap = j;
-			}
+			if (array[index2] < array[min])
+				min = index2;
+			index2++;
 		}
-		if (index_to_swap != i)
+		if (min != index)
 		{
-			swaper = array[index_to_swap];
-			array[index_to_swap] = array[i];
-			array[i] = swaper;
+			temp = array[index];
+			array[index] = array[min];
+			array[min] = temp;
 			print_array(array, size);
 		}
-
+		index++;
 	}
 }
